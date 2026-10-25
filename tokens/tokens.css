@@ -1,0 +1,65 @@
+/* Anders Design System – genererad från tokens.json. Sätt data-theme="skog|grafit|marin" på <html>. */
+
+:root, [data-theme="skog"] {
+  --ads-dark-bg: radial-gradient(120% 140% at 85% 10%, #1E7A55 0%, #14523C 30%, #0A1F18 70%, #06140F 100%);
+  --ads-dark-accent: #5BD69A;
+  --ads-dark-text: #FFFFFF;
+  --ads-dark-text-soft: #A9C2B6;
+  --ads-light-bg: radial-gradient(70% 90% at 100% 100%, #D9DDDA 0%, #F3F5F3 45%, #FFFFFF 75%);
+  --ads-light-text: #0F1412;
+  --ads-light-text-soft: #5C6662;
+  --ads-light-line: #E3E7E4;
+  --ads-accent-1: #1E8E5E;
+  --ads-accent-2: #14523C;
+  --ads-accent-3: #0A1F18;
+  --ads-accent-gradient: linear-gradient(135deg, #1E8E5E 0%, #14523C 55%, #0A1F18 100%);
+}
+
+[data-theme="grafit"] {
+  --ads-dark-bg: radial-gradient(120% 140% at 85% 10%, #5A5A5A 0%, #2A2A2A 30%, #111111 70%, #060606 100%);
+  --ads-dark-accent: #FFFFFF;
+  --ads-dark-text: #FFFFFF;
+  --ads-dark-text-soft: #B8B8B8;
+  --ads-light-bg: radial-gradient(70% 90% at 100% 100%, #DADADA 0%, #F3F3F3 45%, #FFFFFF 75%);
+  --ads-light-text: #000000;
+  --ads-light-text-soft: #5E5E5E;
+  --ads-light-line: #E3E3E3;
+  --ads-accent-1: #4A4A4A;
+  --ads-accent-2: #1E1E1E;
+  --ads-accent-3: #000000;
+  --ads-accent-gradient: linear-gradient(135deg, #4A4A4A 0%, #1E1E1E 55%, #000000 100%);
+}
+
+[data-theme="marin"] {
+  --ads-dark-bg: radial-gradient(55% 75% at 100% 0%, #3B78D8 0%, #1A3D7A 25%, rgba(10,22,48,0) 60%), linear-gradient(160deg, #0B1834 0%, #07102A 55%, #040A1A 100%);
+  --ads-dark-accent: #8EC2FF;
+  --ads-dark-text: #FFFFFF;
+  --ads-dark-text-soft: #AEBBD3;
+  --ads-light-bg: radial-gradient(70% 90% at 100% 100%, #D8DBE2 0%, #F2F3F6 45%, #FFFFFF 75%);
+  --ads-light-text: #0D1018;
+  --ads-light-text-soft: #5A5F6B;
+  --ads-light-line: #E3E3E3;
+  --ads-accent-1: #2D66C4;
+  --ads-accent-2: #13306A;
+  --ads-accent-3: #07102A;
+  --ads-accent-gradient: linear-gradient(135deg, #2D66C4 0%, #13306A 55%, #07102A 100%);
+}
+
+.ads-glass {
+  background: rgba(176,180,178,0.22);
+  border: 0.5px solid rgba(255,255,255,0.75);
+  border-radius: 11px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), inset 0 -1px 0 rgba(60,64,62,0.16), 0 6px 14px rgba(15,15,15,.07);
+  position: relative; overflow: hidden;
+}
+.ads-glass--dark {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.28);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 6px 14px rgba(0,0,0,.25);
+}
+.ads-glass--hero::before { content: ""; position: absolute; inset: 0; background: linear-gradient(115deg, transparent 28%, rgba(255,255,255,0.3) 40%, rgba(255,255,255,0.06) 47%, transparent 55%); }
+.ads-gradient-text {
+  background: var(--ads-accent-gradient);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,.15));
+}

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anders Design System</title>
+<style>
+:root{--bg:#F6F7F6;--ink:#121212;--muted:#5C6662;--line:#E3E3E3}
+@media (prefers-color-scheme:dark){:root{--bg:#0E1110;--ink:#EDEFEE;--muted:#9AA3A0;--line:#2A2F2D}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:1180px;margin:0 auto;padding:40px 16px 64px}
+h1{font-size:24px;font-weight:600;margin:0}
+.sub{color:var(--muted);margin:4px 0 20px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.bar button{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer}
+.bar button[aria-pressed=true]{border-color:var(--ink)}
+.sw{display:flex;gap:6px;margin:14px 0 4px}.sw div{flex:1;height:30px;border-radius:5px;border:1px solid var(--line)}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;margin-top:18px}
+.s{aspect-ratio:16/9;border-radius:10px;padding:5% 5.5%;position:relative;overflow:hidden;container-type:inline-size}
+.cap{font-size:13px;color:var(--muted);margin:6px 0 0}
+.k{border-radius:11px;padding:2.6cqw 3cqw;position:relative;overflow:hidden}
+.k>*{position:relative}
+.sh::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 28%,rgba(255,255,255,.3) 40%,rgba(255,255,255,.06) 47%,transparent 55%)}
+.lg{background:rgba(176,180,178,.22);border:.5px solid rgba(255,255,255,.75);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),inset 0 -1px 0 rgba(60,64,62,.16),0 6px 14px rgba(15,15,15,.07)}
+body.shot main{padding:0;max-width:none}body.shot .chrome{display:none}body.shot .g{display:block;margin:0}body.shot .g>div:not(.on){display:none}body.shot .s{border-radius:0}body.shot .cap{display:none}
+</style>
+</head>
+<body>
+<main>
+<div class="chrome">
+<h1>Anders Design System</h1>
+<p class="sub">Tre paletter, ett system. Mörkt för att sätta tonen, ljust för innehåll.</p>
+<div class="bar" id="bar"></div>
+<div class="sw" id="sw"></div>
+</div>
+<div class="g" id="deck"></div>
+</main>
+<script>
+const T={
+skog:{name:"Grön skog",dark:"radial-gradient(120% 140% at 85% 10%,#1E7A55 0%,#14523C 30%,#0A1F18 70%,#06140F 100%)",acc:"#5BD69A",soft:"#A9C2B6",g1:"#1E8E5E",g2:"#14523C",g3:"#0A1F18",ink:"#0F1412",cw:"#5C6662",light:"radial-gradient(70% 90% at 100% 100%,#D9DDDA 0%,#F3F5F3 45%,#FFFFFF 75%)",sw:["#06140F","#0A1F18","#14523C","#1E7A55","#5BD69A","#F3F5F3","#5C6662","#0F1412"]},
+grafit:{name:"Svart och vit",dark:"radial-gradient(120% 140% at 85% 10%,#5A5A5A 0%,#2A2A2A 30%,#111111 70%,#060606 100%)",acc:"#FFFFFF",soft:"#B8B8B8",g1:"#4A4A4A",g2:"#1E1E1E",g3:"#000000",ink:"#000000",cw:"#5E5E5E",light:"radial-gradient(70% 90% at 100% 100%,#DADADA 0%,#F3F3F3 45%,#FFFFFF 75%)",sw:["#060606","#111111","#2A2A2A","#5A5A5A","#B8B8B8","#F3F3F3","#5E5E5E","#000000"]},
+marin:{name:"Mörkblå",dark:"radial-gradient(55% 75% at 100% 0%,#3B78D8 0%,#1A3D7A 25%,rgba(10,22,48,0) 60%),linear-gradient(160deg,#0B1834 0%,#07102A 55%,#040A1A 100%)",acc:"#8EC2FF",soft:"#AEBBD3",g1:"#2D66C4",g2:"#13306A",g3:"#07102A",ink:"#0D1018",cw:"#5A5F6B",light:"radial-gradient(70% 90% at 100% 100%,#D8DBE2 0%,#F2F3F6 45%,#FFFFFF 75%)",sw:["#040A1A","#07102A","#0B1834","#1A3D7A","#3B78D8","#8EC2FF","#F2F3F6","#0D1018"]}
+};
+const q=new URLSearchParams(location.search);
+function render(key){
+const t=T[key];
+const gt=`background:linear-gradient(135deg,${t.g1} 0%,${t.g2} 55%,${t.g3} 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 1px 1px rgba(0,0,0,.15))`;
+const D=`background:${t.dark}`,W=`background:${t.light};border:.5px solid #E3E3E3`;
+const bd=w=>`<div style="position:absolute;top:0;left:0;height:.7cqw;width:${w}%;background:linear-gradient(90deg,#fff,rgba(255,255,255,.55))"></div>`;
+const bw=w=>`<div style="position:absolute;top:0;left:0;height:.7cqw;width:${w}%;background:linear-gradient(90deg,${t.g1},${t.g3})"></div>`;
+const arc=(y1,y2,op)=>`<svg viewBox="0 0 320 180" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%" aria-hidden="true"><path d="M-10 ${y1} Q160 ${y2} 330 ${y1}" fill="none" stroke="${t.acc}" stroke-width="1.6" opacity="${op}" vector-effect="non-scaling-stroke"/><path d="M-10 ${y1+10} Q160 ${y2+24} 330 ${y1+10}" fill="none" stroke="${t.soft}" stroke-width=".6" opacity=".25" vector-effect="non-scaling-stroke"/></svg>`;
+const K='font-size:3.1cqw;letter-spacing:.12em;font-weight:600';
+const kd=s=>`<div style="position:relative;${K};color:${t.acc}">${s}</div>`;
+const kw=s=>`<div style="${K};${gt}">${s}</div>`;
+const tw=s=>`<div style="font-size:5.4cqw;font-weight:600;color:${t.ink};margin-top:1.8cqw;line-height:1.25">${s}</div>`;
+const G=s=>`<span style="${gt}">${s}</span>`;
+const card=(l,v,sh,hero)=>`<div class="k lg ${sh?'sh':''}"><div style="font-size:3.1cqw;color:${t.cw}">${l}</div><div style="font-size:5cqw;font-weight:600;${hero?gt:'color:'+t.ink}">${v}</div></div>`;
+const bar=(h,ql,hero)=>`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:1cqw;height:100%;justify-content:flex-end">${hero?`<span style="font-size:3.4cqw;font-weight:600;${gt}">4,2 Mkr</span>`:''}<div style="width:100%;height:${h}%;background:${hero?`linear-gradient(180deg,${t.g1},${t.g3})`:'#E3E3E3'};border-radius:1cqw"></div><span style="font-size:2.8cqw;color:${hero?t.ink:t.cw}">${ql}</span></div>`;
+const ar=`<svg viewBox="0 0 14 10" aria-hidden="true"><path d="M1 5h11M8 1l4 4-4 4" fill="none" stroke="${t.g1}" stroke-width="1.2"/></svg>`;
+const step=(n,a,b,sh)=>`<div class="k lg ${sh?'sh':''}"><div style="font-size:5.6cqw;font-weight:600;${gt}">${n}</div><div style="font-size:3.4cqw;color:${t.ink}">${a}</div><div style="font-size:3.1cqw;color:${t.cw}">${b}</div></div>`;
+const bot='position:absolute;left:6%;right:6%;bottom:5%';
+const S=[
+[`<div class="s" style="${D}">${bd(12)}${arc(150,20,.6)}${kd('ANDERS LINDBERG · ANALYTICS ENGINEERING')}<div style="position:absolute;left:6%;bottom:17%"><div style="font-size:8.8cqw;font-weight:600;color:#fff;line-height:1.1">En samlad bild<br>av kunden</div><div style="font-size:3.8cqw;color:${t.soft};margin-top:2.4cqw">Från fyra system till ett beslutsunderlag</div></div><div style="position:absolute;left:6%;bottom:6%;font-size:2.8cqw;letter-spacing:.1em;color:${t.soft}">OKTOBER 2026</div></div>`,"1 · Titel"],
+[`<div class="s" style="${W}">${bw(25)}${kw('AGENDA')}<div style="margin-top:3.6cqw;display:grid;gap:2.2cqw">${[['01','Nuläge och problem'],['02','Datamodellen'],['03','Resultat']].map(([n,s])=>`<div style="display:flex;gap:3.6cqw;align-items:baseline;border-bottom:.5px solid #E3E3E3;padding-bottom:1.5cqw"><span style="font-size:5cqw;font-weight:600;${gt}">${n}</span><span style="font-size:4cqw;color:${t.ink}">${s}</span></div>`).join('')}<div style="display:flex;gap:3.6cqw;align-items:baseline"><span style="font-size:5cqw;font-weight:600;color:#AAAAAA">04</span><span style="font-size:4cqw;color:${t.cw}">Nästa steg</span></div></div></div>`,"2 · Agenda"],
+[`<div class="s" style="${W}">${bw(37)}${kw('NYCKELTAL · Q4')}${tw('Tillväxten kom från '+G('återkommande kunder'))}<div style="${bot};display:grid;grid-template-columns:repeat(3,1fr);gap:2.5cqw">${card('Intäkt','4,2 Mkr')}${card('CAC','310 kr')}${card('Återköp','+12%',1,1)}</div></div>`,"3 · Nyckeltal"],
+[`<div class="s" style="${D}">${bd(50)}${arc(175,95,.45)}${kd('02 · RESULTAT')}<div style="position:absolute;left:6%;bottom:12%"><div style="font-size:20cqw;font-weight:600;color:#fff;line-height:.95;letter-spacing:-.02em">+38%</div><div style="font-size:4cqw;color:${t.soft};margin-top:2.4cqw">Konvertering efter ny checkout</div></div></div>`,"4 · Stor siffra"],
+[`<div class="s" style="${W}">${bw(62)}${kw('INTÄKT PER KVARTAL')}${tw('Q4 slog rekord efter lanseringen')}<div style="${bot};display:flex;align-items:flex-end;gap:3cqw;height:52%">${bar(38,'Q1')}${bar(48,'Q2')}${bar(55,'Q3')}${bar(82,'Q4',1)}</div></div>`,"5 · Diagram"],
+[`<div class="s" style="${W}">${bw(75)}${kw('03 · PROCESS')}${tw('Tre steg till en samlad kundbild')}<div style="${bot};display:grid;grid-template-columns:1fr 4cqw 1fr 4cqw 1fr;align-items:center;gap:1.2cqw">${step(1,'Samla','Fivetran')}${ar}${step(2,'Modellera','dbt')}${ar}${step(3,'Aktivera','Looker',1)}</div></div>`,"6 · Process"],
+[`<div class="s" style="${D}">${bd(87)}${kd('INSIKT')}<div style="font-size:6cqw;color:#fff;margin-top:3.6cqw;line-height:1.35;max-width:78%">Kunder som köper <span style="color:${t.acc}">två gånger</span> första månaden stannar <span style="color:${t.acc}">tre gånger</span> längre.</div><div style="position:absolute;right:6%;bottom:5%;width:42%"><div class="k sh" style="background:rgba(255,255,255,.08);border:.5px solid rgba(255,255,255,.28);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 6px 14px rgba(0,0,0,.25)"><div style="font-size:3.1cqw;color:${t.soft}">Rekommendation</div><div style="font-size:3.8cqw;color:#fff;margin-top:.6cqw">Andra köpet inom 30 dagar</div></div></div></div>`,"7 · Insikt"],
+[`<div class="s" style="${D}">${bd(100)}${arc(165,30,.5)}${kd('TACK')}<div style="position:absolute;left:6%;bottom:17%"><div style="font-size:8cqw;font-weight:600;color:#fff;line-height:1.1">Frågor?</div><div style="font-size:3.8cqw;color:${t.soft};margin-top:2.4cqw">github.com/andersvlindberg</div></div></div>`,"8 · Avslut"]
+];
+const only=+q.get('slide')||0;
+document.getElementById('deck').innerHTML=S.map(([h,c],i)=>`<div class="${only===i+1?'on':''}">${h}<p class="cap">${c}</p></div>`).join('');
+document.getElementById('sw').innerHTML=t.sw.map(c=>`<div style="background:${c}" title="${c}"></div>`).join('');
+document.querySelectorAll('#bar button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===key));
+}
+document.getElementById('bar').innerHTML=Object.entries(T).map(([k,v])=>`<button data-k="${k}">${v.name}</button>`).join('');
+document.querySelectorAll('#bar button').forEach(b=>b.onclick=()=>render(b.dataset.k));
+if(q.get('slide'))document.body.classList.add('shot');
+render(T[q.get('theme')]?q.get('theme'):'skog');
+</script>
+</body>
+</html>
