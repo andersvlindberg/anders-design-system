@@ -4,6 +4,8 @@
 
 ![Tre paletter](images/hero.png)
 
+**[Öppna den interaktiva förhandsvisningen](https://andersvlindberg.github.io/anders-design-system/preview/)** och växla mellan paletterna.
+
 > *English summary: a personal presentation design system with three palettes (forest green, graphite, navy), frosted-glass cards, a signature arc motif and a progress line, with design tokens in JSON and CSS, an interactive preview and a PowerPoint build guide.*
 
 ## Idén
